@@ -40,7 +40,7 @@ int	ft_cnt_line(char *file, t_map *map, char **content)
 	fd = open(file, O_RDONLY);
 	line = "";
 	if (fd < 0)
-		return (-1);
+		return (0);
 	while (line)
 	{
 		line = get_next_line(fd);

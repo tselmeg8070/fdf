@@ -51,6 +51,7 @@ void	ft_map_from_file(char *file, t_map *map)
 	if (!ft_file_to_cord(content, map))
 	{
 		free(map->map);
+		free(content);
 		ft_error_gen();
 	}
 	free(content);
