@@ -32,13 +32,21 @@ typedef struct s_data {
 }	t_data;
 
 typedef struct s_map {
-	int		**map;
+	int		*map;
 	int		row;
 	int		col;
 }	t_map;
 
+void	ft_split_free(char ***res);
+
+void	ft_error_gen();
+
 int	ft_file_to_cord(char *file, t_map *map);
 
-int	ft_cnt_line(char *file, t_map *map);
+int	ft_cnt_line(char *file, t_map *map, char **content);
+
+void	ft_malloc_map(t_map *map);
+
+void	ft_map_from_file(char *file, t_map *map);
 
 #endif

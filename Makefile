@@ -15,6 +15,7 @@ CC = cc
 LIBFT = libft.a
 FILES = main \
 		fdf_prepare \
+		fdf_utils \
 		get_next_line \
 		get_next_line_utils
 

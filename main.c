@@ -20,36 +20,6 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	ft_error_gen()
-{
-	write(2, "Error\n", 7);
-	exit(1);
-}
-
-void	ft_map_from_file(char *file, t_map *map)
-{
-	int	i;
-
-	if (!ft_cnt_line(file, map))
-		ft_error_gen();
-	map->map = (int**) malloc(sizeof(int) * map->row);
-	if (!map->map)
-		ft_error_gen();
-	i = 0;
-	while (i < map->row)
-		map->map[i++] = (int*) malloc(sizeof(int) * map->col);
-	if (!ft_file_to_cord(file, map))
-	{
-		// while (i > 0)
-		// {
-		// 	free(map->map[i - 1]);
-		// 	i--;
-		// }
-		// free(map->map);
-		ft_error_gen();
-	}
-}
-
 int	main(int argc, char **argv)
 {
 	void	*mlx;
@@ -61,6 +31,15 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		ft_map_from_file(argv[1], &map);
+		for (int i = 0; i < map.row; i++)
+		{
+			for (int j = 0; j < map.col; j++)
+			{
+				printf("%d ", map.map[i * map.row + j]);
+			}
+			printf("\n");
+		}
+		free(map.map);
 		// mlx = mlx_init();
 		// mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
 		// img.img = mlx_new_image(mlx, 1920, 1080);
