@@ -90,8 +90,13 @@ int	ft_assign_split(t_map *map, char *line, int row)
 	split = ft_split(line, ' ');
 	while (split && split[c] && res)
 	{
-		map->map[row * map->row + c] = ft_atoi(split[c]);
-		res = ft_check_val(split[c], map->map[row * map->row + c]);
+		if (c >= map->col)
+			res = 0;
+		else
+		{
+			map->map[row * map->col + c] = ft_atoi(split[c]);
+			res = ft_check_val(split[c], map->map[row * map->col + c]);
+		}
 		c++;
 	}
 	ft_split_free(&split);

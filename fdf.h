@@ -23,6 +23,9 @@
 # include "libft/libft.h"
 # include "get_next_line.h"
 
+# define TILE_WIDTH 20
+# define TILE_HEIGHT 10
+
 typedef struct s_data {
 	void	*img;
 	char	*addr;
@@ -31,22 +34,43 @@ typedef struct s_data {
 	int		endian;
 }	t_data;
 
+typedef struct s_point {
+	int	x;
+	int	y;
+	int	rend;
+}	t_point;
+
 typedef struct s_map {
 	int		*map;
+	t_point	*points;
 	int		row;
 	int		col;
+	int		min;
+	int		max;
+	int		tile_width;
+	int		tile_height;
 }	t_map;
 
 void	ft_split_free(char ***res);
 
-void	ft_error_gen();
+void	ft_error_gen(void);
 
-int	ft_file_to_cord(char *file, t_map *map);
+int		ft_file_to_cord(char *file, t_map *map);
 
-int	ft_cnt_line(char *file, t_map *map, char **content);
+int		ft_cnt_line(char *file, t_map *map, char **content);
 
 void	ft_malloc_map(t_map *map);
 
 void	ft_map_from_file(char *file, t_map *map);
+
+int		ft_cal_x(int r, int c, t_map *map);
+
+int		ft_cal_y(int r, int c, t_map *map);
+
+void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
+
+void	ft_calculate_points(t_map *map);
+
+void	ft_connect_points(int r, int c, t_map *map, t_data *img);
 
 #endif

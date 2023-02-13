@@ -14,8 +14,10 @@ NAME = fdf
 CC = cc
 LIBFT = libft.a
 FILES = main \
-		fdf_prepare \
-		fdf_utils \
+		fdf_prepare_map \
+		fdf_prepare_utils \
+		fdf_points_cal \
+		fdf_connect_points \
 		get_next_line \
 		get_next_line_utils
 
