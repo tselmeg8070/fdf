@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 		ft_calculate_window_size(&map);
 		ft_calculate_points(&map);
 		mlx = mlx_init();
-		mlx_win = mlx_new_window(mlx, 1900 , 1080, "Hello world!");
+		mlx_win = mlx_new_window(mlx, 1900 , 1080, argv[1]);
 		img.img = mlx_new_image(mlx, 1900, 1080);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 				&img.line_length, &img.endian);
