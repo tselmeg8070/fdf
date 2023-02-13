@@ -27,7 +27,7 @@ void ft_connect_high(t_point s, t_point e, t_data *img)
 	while (s.y != e.y)
 	{
 		ft_mlx_pixel_put(img, s.x, s.y, 0x00FFFFFF);
-		if (d > 0)
+		if (delta > 0)
 		{
 			s.x += ft_cal_inc(s.x, e.x);
 			delta = delta + (2 * (d[0] - d[1]));
@@ -52,7 +52,7 @@ void ft_connect_low(t_point s, t_point e, t_data *img)
 	while (s.x != e.x)
 	{
 		ft_mlx_pixel_put(img, s.x, s.y, 0x00FFFFFF);
-		if (d > 0)
+		if (delta > 0)
 		{
 			s.y += ft_cal_inc(s.y, e.y);
 			delta = delta + (2 * (d[1] - d[0]));
@@ -71,14 +71,14 @@ void	ft_connect(t_point *s, t_point *e, t_data *img)
 		if (s->x > e->x)
 			ft_connect_low(*e, *s, img);
 		else
-			ft_connect_high(*s, *e, img);
+			ft_connect_low(*s, *e, img);
 	}
 	else
 	{
 		if (s->y > e->y)
 			ft_connect_high(*e, *s, img);
 		else
-			ft_connect_low(*s, *e, img);
+			ft_connect_high(*s, *e, img);
 	}
 }
 

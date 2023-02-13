@@ -84,8 +84,8 @@ int	main(int argc, char **argv)
 		img.img = mlx_new_image(mlx, 1900, 1080);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 				&img.line_length, &img.endian);
-		ft_put_points(&img, &map);
-		// ft_connect_points(0, 0, &map, &img);
+		// ft_put_points(&img, &map);
+		ft_connect_points(0, 0, &map, &img);
 		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 		mlx_loop(mlx);
 		free(map.map);
