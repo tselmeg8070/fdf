@@ -43,6 +43,7 @@ void	ft_malloc_map(t_map *map)
 		free(map->map);
 		ft_error_gen();
 	}
+	map->tile_width = TILE_WIDTH;
 	map->max = 0;
 	map->min = 0;
 }
@@ -50,20 +51,20 @@ void	ft_malloc_map(t_map *map)
 void	ft_map_bottom_up(t_map *map)
 {
 	int	i;
-	int	min;
 
-	min = 0;
 	i = 0;
 	while (i < map->row * map->col)
 	{
-		if (map->map[i] < min)
-			min = map->map[i];
+		if (map->map[i] < map->min)
+			map->min = map->map[i];
 		i++;
 	}
 	i = 0;
 	while (i < map->row * map->col)
 	{
-		map->map[i] += (-1) * min;
+		map->map[i] += (-1) * map->min;
+		if (map->map[i] > map->max)
+			map->max = map->map[i];
 		i++;
 	}
 }
@@ -84,5 +85,9 @@ void	ft_map_from_file(char *file, t_map *map)
 		ft_error_gen();
 	}
 	ft_map_bottom_up(map);
+	if (map->tile_width > 1080 / map->col)
+		map->tile_width = 1080 / map->col;
+	if (map->tile_width > 1080 / map->max)
+		map->tile_width = 1080 / map->max;
 	free(content);
 }

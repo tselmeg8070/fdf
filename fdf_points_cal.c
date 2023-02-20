@@ -4,7 +4,9 @@ int		ft_cal_x(int r, int c, t_map *map)
 {
 	int	x;
 
-	x = (-1) * map->min + 50 + (r - c) * TILE_WIDTH;
+	// x = (-1) * map->min + 50 + (r - c) * map->tile_width;
+	x = 1080 / 2 + (r - c) * map->tile_width;
+	// x = (r - c) * TILE_WIDTH;
 	return (x);
 }
 
@@ -12,8 +14,11 @@ int		ft_cal_y(int r, int c, t_map *map)
 {
 	int	y;
 
-	y = map->max + (r + c) * TILE_HEIGHT;
-	y -= map->map[r * map->col + c] * TILE_HEIGHT;
+	// y = map->max + (r + c) * map->tile_width / 2;
+	// y = 1080 - (r + c) * map->tile_width / 2;
+	y = 1080 / 2 + (r + c) * map->tile_width / 2;
+	// y = (r + c) * TILE_HEIGHT;
+	y -= map->map[r * map->col + c] * map->tile_width;
 	return (y);
 }
 

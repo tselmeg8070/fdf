@@ -94,8 +94,8 @@ int	ft_assign_split(t_map *map, char *line, int row)
 			res = 0;
 		else
 		{
-			map->map[row * map->col + c] = ft_atoi(split[c]);
-			res = ft_check_val(split[c], map->map[row * map->col + c]);
+			map->map[(row) * map->col + (map->col - 1) - c] = ft_atoi(split[c]);
+			// res = ft_check_val(split[c], map->map[row * map->col + c]);
 		}
 		c++;
 	}

@@ -32,8 +32,10 @@ void	ft_put_points(t_data *img, t_map *map)
 		c = 0;
 		while (c < map->col)
 		{
-			ft_mlx_pixel_put(img, map->points[map->col * r + c].x,
-				map->points[map->col * r + c].y, 0x00FFFFFF);
+			printf("X: %d, Y: %d\n", map->points[map->col * r + c].x, map->points[map->col * r + c].y);
+			if (map->points[map->col * r + c].x < 1080 && map->points[map->col * r + c].y < 1080)
+				ft_mlx_pixel_put(img, map->points[map->col * r + c].x,
+					map->points[map->col * r + c].y, 0x00FFFFFF);
 			// ft_mlx_pixel_put(img, 4,
 			// 	8, 0x00FFFFFF);
 			c++;
@@ -84,7 +86,7 @@ int	main(int argc, char **argv)
 		img.img = mlx_new_image(mlx, 1900, 1080);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 				&img.line_length, &img.endian);
-		// ft_put_points(&img, &map);
+		ft_put_points(&img, &map);
 		ft_connect_points(0, 0, &map, &img);
 		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 		mlx_loop(mlx);
