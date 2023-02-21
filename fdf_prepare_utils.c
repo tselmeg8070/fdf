@@ -19,14 +19,14 @@ int	ft_cnt_split(char *line)
 
 	c = 0;
 	split = ft_split(line, ' ');
-	while (split && split[c])
+	while (split && split[c] && ft_strlen(split[c]))
 	{
 		free(split[c]);
 		c++;
 	}
 	if (split)
 		free(split);
-	return (c);
+	return (c - 1);
 }
 
 int	ft_cnt_line(char *file, t_map *map, char **content)
@@ -90,12 +90,12 @@ int	ft_assign_split(t_map *map, char *line, int row)
 	split = ft_split(line, ' ');
 	while (split && split[c] && res)
 	{
-		if (c >= map->col)
+		if (c > map->col)
 			res = 0;
 		else
 		{
 			map->map[(row) * map->col + (map->col - 1) - c] = ft_atoi(split[c]);
-			// res = ft_check_val(split[c], map->map[row * map->col + c]);
+			res = ft_check_val(split[c], map->map[(row) * map->col + (map->col - 1) - c]);
 		}
 		c++;
 	}

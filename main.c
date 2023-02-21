@@ -27,6 +27,7 @@ void	ft_put_points(t_data *img, t_map *map)
 	int	*arr;
 
 	r = 0;
+	printf("Tile width: %d\n", map->tile_width);
 	while (r < map->row)
 	{
 		c = 0;
@@ -55,14 +56,10 @@ void	ft_calculate_window_size(t_map *map)
 		c = 0;
 		while (c < map->col)
 		{
-			if ((r - c) * TILE_WIDTH > map->max)
-				map->max = (r - c) * TILE_WIDTH;
-			if ((r + c) * TILE_HEIGHT > map->max)
-				map->max = (r + c) * TILE_HEIGHT;
-			if ((r - c) * TILE_WIDTH < map->min)
-				map->min = (r - c) * TILE_WIDTH;
-			if ((r + c) * TILE_HEIGHT < map->min)
-				map->min = (r + c) * TILE_HEIGHT;
+			if (map->points[map->col * r + c].x > map->max)
+				map->max = map->points[map->col * r + c].x;
+			if (map->points[map->col * r + c].y > map->max)
+				map->max = map->points[map->col * r + c].y;
 			c++;
 		}
 		r++;
@@ -79,14 +76,18 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		ft_map_from_file(argv[1], &map);
-		ft_calculate_window_size(&map);
+		printf("Map size: %d\n", map.max);
 		ft_calculate_points(&map);
+		ft_calculate_window_size(&map);
+		printf("Map col: %d\n", map.col);
+		printf("Map row: %d\n", map.row);
+		printf("Map tile: %d\n", map.tile_width);
 		mlx = mlx_init();
-		mlx_win = mlx_new_window(mlx, 1900 , 1080, argv[1]);
-		img.img = mlx_new_image(mlx, 1900, 1080);
+		mlx_win = mlx_new_window(mlx, map.max , map.max, argv[1]);
+		img.img = mlx_new_image(mlx, map.max, map.max);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 				&img.line_length, &img.endian);
-		ft_put_points(&img, &map);
+		// ft_put_points(&img, &map);
 		ft_connect_points(0, 0, &map, &img);
 		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
 		mlx_loop(mlx);

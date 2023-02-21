@@ -62,11 +62,12 @@ void	ft_map_bottom_up(t_map *map)
 	i = 0;
 	while (i < map->row * map->col)
 	{
-		map->map[i] += (-1) * map->min;
+		map->map[i] -= map->min;
 		if (map->map[i] > map->max)
 			map->max = map->map[i];
 		i++;
 	}
+	printf("Map maxxx: %d\n", map->max);
 }
 
 void	ft_map_from_file(char *file, t_map *map)
@@ -78,16 +79,21 @@ void	ft_map_from_file(char *file, t_map *map)
 	if (!ft_cnt_line(file, map, &content))
 		ft_error_gen();
 	ft_malloc_map(map);
+	printf("Malloc map\n");
 	if (!ft_file_to_cord(content, map))
 	{
 		free(map->map);
 		free(content);
 		ft_error_gen();
 	}
+	printf("Cordinated\n");
 	ft_map_bottom_up(map);
-	if (map->tile_width > 1080 / map->col)
-		map->tile_width = 1080 / map->col;
-	if (map->tile_width > 1080 / map->max)
-		map->tile_width = 1080 / map->max;
+	printf("Max height: %d", map->max);
+	if (map->tile_width > 540 / map->col)
+		map->tile_width = 540 / map->col;
+	if (map->tile_width > 540 / map->max)
+		map->tile_width = 540 / map->max;
+	if (map->tile_width < 4)
+		map->tile_width = 3;
 	free(content);
 }
