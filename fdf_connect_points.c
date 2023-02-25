@@ -14,8 +14,7 @@ void ft_connect_high(t_point s, t_point e, t_data *img)
 
 	d[0] = e.x - s.x;
 	d[1] = e.y - s.y;
-	if (d[0] < 0)
-		d[0] = -d[0];
+	d[0] = abs(d[0]);
 	delta = 2 * d[0] - d[1];
 	while (s.y != e.y)
 	{
@@ -39,8 +38,7 @@ void ft_connect_low(t_point s, t_point e, t_data *img)
 
 	d[0] = e.x - s.x;
 	d[1] = e.y - s.y;
-	if (d[1] < 0)
-		d[1] = -d[1];
+	d[1] = abs(d[1]);
 	delta = 2 * d[1] - d[0];
 	while (s.x != e.x)
 	{

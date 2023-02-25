@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <X11/X.h>
+#include <X11/keysym.h>
 
 void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -18,31 +20,6 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int *) dst = color;
-}
-
-void	ft_put_points(t_data *img, t_map *map)
-{
-	int	r;
-	int	c;
-	int	*arr;
-
-	r = 0;
-	printf("Tile width: %d\n", map->tile_width);
-	while (r < map->row)
-	{
-		c = 0;
-		while (c < map->col)
-		{
-			printf("X: %d, Y: %d\n", map->points[map->col * r + c].x, map->points[map->col * r + c].y);
-			if (map->points[map->col * r + c].x < 1080 && map->points[map->col * r + c].y < 1080)
-				ft_mlx_pixel_put(img, map->points[map->col * r + c].x,
-					map->points[map->col * r + c].y, 0x00FFFFFF);
-			// ft_mlx_pixel_put(img, 4,
-			// 	8, 0x00FFFFFF);
-			c++;
-		}
-		r++;
-	}
 }
 
 void	ft_calculate_window_size(t_map *map)
@@ -66,31 +43,54 @@ void	ft_calculate_window_size(t_map *map)
 	}
 }
 
+int	handle_input(int keysym, t_vars *vars)
+{
+	if (keysym == XK_Escape)
+	{
+		mlx_destroy_window(vars->mlx, vars->win);
+		vars->win = 0;
+	}
+	return (0);
+}
+
+int	handle_cross(t_vars *vars)
+{
+	mlx_destroy_window(vars->mlx, vars->win);
+	vars->win = 0;
+	return (0);
+}
+
+/* This function needs to exist, but it is useless for the moment */
+int	handle_no_event(void *data)
+{
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
-	void	*mlx;
-	void	*mlx_win;
+	t_vars	vars;
 	t_data	img;
 	t_map	map;
 
 	if (argc == 2)
 	{
 		ft_map_from_file(argv[1], &map);
-		// printf("Map size: %d\n", map.max);
-		// ft_calculate_points(&map);
-		// ft_calculate_window_size(&map);
-		// printf("Map col: %d\n", map.col);
-		// printf("Map row: %d\n", map.row);
-		// printf("Map tile: %d\n", map.tile_width);
-		// mlx = mlx_init();
-		// mlx_win = mlx_new_window(mlx, map.max , map.max, argv[1]);
-		// img.img = mlx_new_image(mlx, map.max, map.max);
-		// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-		// 		&img.line_length, &img.endian);
-		// // ft_put_points(&img, &map);
-		// ft_connect_points(0, 0, &map, &img);
-		// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-		// mlx_loop(mlx);
+		ft_calculate_points(&map);
+		ft_calculate_window_size(&map);
+		vars.mlx = mlx_init();
+		vars.win = mlx_new_window(vars.mlx, map.max, map.max, argv[1]);
+		img.img = mlx_new_image(vars.mlx, map.max, map.max);
+		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+				&img.line_length, &img.endian);
+		ft_connect_points(0, 0, &map, &img);
+		mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+		mlx_loop_hook(vars.mlx, &handle_no_event, &vars);
+		mlx_key_hook(vars.win, &handle_input, &vars);
+		mlx_hook(vars.win, 17, 1L<<0, &handle_cross, &vars);
+		mlx_loop(vars.mlx);
+		mlx_destroy_image(vars.mlx, img.img);
+		mlx_destroy_display(vars.mlx);
+		free(vars.mlx);
 		free(map.map);
 		free(map.points);
 	}

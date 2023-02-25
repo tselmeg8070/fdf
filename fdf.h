@@ -52,6 +52,11 @@ typedef struct s_map {
 	int		tile_height;
 }	t_map;
 
+typedef struct s_vars {
+	void	*mlx;
+	void	*win;
+}	t_vars;
+
 void	ft_split_free(char ***res);
 
 void	ft_error_gen(void);
