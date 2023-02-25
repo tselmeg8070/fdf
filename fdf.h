@@ -15,9 +15,9 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <math.h>
 # include <stdio.h>
 # include <sys/stat.h>
-# include <fcntl.h>
 # include <fcntl.h>
 # include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
@@ -37,6 +37,7 @@ typedef struct s_data {
 typedef struct s_point {
 	int	x;
 	int	y;
+	int	color;
 	int	rend;
 }	t_point;
 
@@ -56,6 +57,8 @@ void	ft_split_free(char ***res);
 void	ft_error_gen(void);
 
 int		ft_file_to_cord(char *file, t_map *map);
+
+void	ft_split_to_cord(t_map *map, int r, int c, char *split);
 
 int		ft_cnt_line(char *file, t_map *map, char **content);
 

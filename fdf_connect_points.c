@@ -7,13 +7,6 @@ int	ft_cal_inc(int point, int dest)
 	return (-1);
 }
 
-int	ft_abs(int val)
-{
-	if (val < 0)
-		return ((-1) * val);
-	return (val);
-}
-
 void ft_connect_high(t_point s, t_point e, t_data *img)
 {
 	int	d[2];
@@ -26,7 +19,7 @@ void ft_connect_high(t_point s, t_point e, t_data *img)
 	delta = 2 * d[0] - d[1];
 	while (s.y != e.y)
 	{
-		ft_mlx_pixel_put(img, s.x, s.y, 0x00FFFFFF);
+		ft_mlx_pixel_put(img, s.x, s.y, s.color);
 		if (delta > 0)
 		{
 			s.x += ft_cal_inc(s.x, e.x);
@@ -36,7 +29,7 @@ void ft_connect_high(t_point s, t_point e, t_data *img)
 			delta = delta + 2 * d[0];
 		s.y += ft_cal_inc(s.y, e.y);
 	}
-	ft_mlx_pixel_put(img, s.x, s.y, 0x00FFFFFF);
+	ft_mlx_pixel_put(img, s.x, s.y, s.color);
 }
 
 void ft_connect_low(t_point s, t_point e, t_data *img)
@@ -51,7 +44,7 @@ void ft_connect_low(t_point s, t_point e, t_data *img)
 	delta = 2 * d[1] - d[0];
 	while (s.x != e.x)
 	{
-		ft_mlx_pixel_put(img, s.x, s.y, 0x00FFFFFF);
+		ft_mlx_pixel_put(img, s.x, s.y, s.color);
 		if (delta > 0)
 		{
 			s.y += ft_cal_inc(s.y, e.y);
@@ -61,12 +54,12 @@ void ft_connect_low(t_point s, t_point e, t_data *img)
 			delta = delta + 2 * d[1];
 		s.x += ft_cal_inc(s.x, e.x);
 	}
-	ft_mlx_pixel_put(img, s.x, s.y, 0x00FFFFFF);
+	ft_mlx_pixel_put(img, s.x, s.y, s.color);
 }
 
 void	ft_connect(t_point *s, t_point *e, t_data *img)
 {
-	if (ft_abs(e->y - s->y) < ft_abs(e->x - s->x))
+	if (abs(e->y - s->y) < abs(e->x - s->x))
 	{
 		if (s->x > e->x)
 			ft_connect_low(*e, *s, img);

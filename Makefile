@@ -16,6 +16,7 @@ LIBFT = libft.a
 FILES = main \
 		fdf_prepare_map \
 		fdf_prepare_utils \
+		fdf_prepare_split \
 		fdf_points_cal \
 		fdf_connect_points \
 		get_next_line \

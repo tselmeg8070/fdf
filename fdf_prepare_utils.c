@@ -15,18 +15,22 @@
 int	ft_cnt_split(char *line)
 {
 	int		c;
+	int		i;
 	char	**split;
 
+	i = 0;
 	c = 0;
 	split = ft_split(line, ' ');
-	while (split && split[c] && ft_strlen(split[c]))
+	while (split && split[i] != NULL)
 	{
-		free(split[c]);
-		c++;
+		if (ft_strncmp(split[i], "\n", 1) != 0)
+			c++;
+		free(split[i]);
+		i++;
 	}
 	if (split)
 		free(split);
-	return (c - 1);
+	return (c);
 }
 
 int	ft_cnt_line(char *file, t_map *map, char **content)
@@ -58,27 +62,6 @@ int	ft_cnt_line(char *file, t_map *map, char **content)
 	return (1);
 }
 
-int	ft_check_val(char *str, int val)
-{
-	int	dig;
-
-	dig = 0;
-	if (val < 0)
-		dig++;
-	if (val == 0 && ft_strncmp(str, "0", 1) != 0)
-		return (0);
-	if (val == 0)
-		dig = 1;
-	while (val != 0)
-	{
-		dig++;
-		val /= 10;
-	}
-	if (dig == (int) ft_strlen(str))
-		return (1);
-	return (0);
-}
-
 int	ft_assign_split(t_map *map, char *line, int row)
 {
 	char	**split;
@@ -93,10 +76,7 @@ int	ft_assign_split(t_map *map, char *line, int row)
 		if (c > map->col)
 			res = 0;
 		else
-		{
-			map->map[(row) * map->col + (map->col - 1) - c] = ft_atoi(split[c]);
-			res = ft_check_val(split[c], map->map[(row) * map->col + (map->col - 1) - c]);
-		}
+			ft_split_to_cord(map, row, c, split[c]);
 		c++;
 	}
 	ft_split_free(&split);

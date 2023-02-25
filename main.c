@@ -76,21 +76,21 @@ int	main(int argc, char **argv)
 	if (argc == 2)
 	{
 		ft_map_from_file(argv[1], &map);
-		printf("Map size: %d\n", map.max);
-		ft_calculate_points(&map);
-		ft_calculate_window_size(&map);
-		printf("Map col: %d\n", map.col);
-		printf("Map row: %d\n", map.row);
-		printf("Map tile: %d\n", map.tile_width);
-		mlx = mlx_init();
-		mlx_win = mlx_new_window(mlx, map.max , map.max, argv[1]);
-		img.img = mlx_new_image(mlx, map.max, map.max);
-		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-				&img.line_length, &img.endian);
-		// ft_put_points(&img, &map);
-		ft_connect_points(0, 0, &map, &img);
-		mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-		mlx_loop(mlx);
+		// printf("Map size: %d\n", map.max);
+		// ft_calculate_points(&map);
+		// ft_calculate_window_size(&map);
+		// printf("Map col: %d\n", map.col);
+		// printf("Map row: %d\n", map.row);
+		// printf("Map tile: %d\n", map.tile_width);
+		// mlx = mlx_init();
+		// mlx_win = mlx_new_window(mlx, map.max , map.max, argv[1]);
+		// img.img = mlx_new_image(mlx, map.max, map.max);
+		// img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+		// 		&img.line_length, &img.endian);
+		// // ft_put_points(&img, &map);
+		// ft_connect_points(0, 0, &map, &img);
+		// mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+		// mlx_loop(mlx);
 		free(map.map);
 		free(map.points);
 	}
