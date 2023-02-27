@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include <X11/X.h>
-#include <X11/keysym.h>
 
 void	ft_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -43,33 +41,20 @@ void	ft_calculate_window_size(t_map *map)
 	}
 }
 
-int	handle_input(int keysym, t_vars *vars)
-{
-	if (keysym == XK_Escape)
-	{
-		mlx_destroy_window(vars->mlx, vars->win);
-		vars->win = 0;
-	}
-	return (0);
-}
-
-int	handle_cross(t_vars *vars)
+void	ft_final_free(t_map *map, t_vars *vars, t_data *img)
 {
 	mlx_destroy_window(vars->mlx, vars->win);
 	vars->win = 0;
-	return (0);
-}
-
-/* This function needs to exist, but it is useless for the moment */
-int	handle_no_event(void *data)
-{
-	return (0);
+	mlx_destroy_image(vars->mlx, img->img);
+	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
+	free(map->map);
+	free(map->points);
 }
 
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
-	t_data	img;
 	t_map	map;
 
 	if (argc == 2)
@@ -79,19 +64,16 @@ int	main(int argc, char **argv)
 		ft_calculate_window_size(&map);
 		vars.mlx = mlx_init();
 		vars.win = mlx_new_window(vars.mlx, map.max, map.max, argv[1]);
-		img.img = mlx_new_image(vars.mlx, map.max, map.max);
-		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
-				&img.line_length, &img.endian);
-		ft_connect_points(0, 0, &map, &img);
-		mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+		vars.img.img = mlx_new_image(vars.mlx, map.max, map.max);
+		vars.img.addr = mlx_get_data_addr(vars.img.img,
+				&vars.img.bits_per_pixel,
+				&vars.img.line_length, &vars.img.endian);
+		ft_connect_points(0, 0, &map, &vars.img);
+		mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
 		mlx_loop_hook(vars.mlx, &handle_no_event, &vars);
-		mlx_key_hook(vars.win, &handle_input, &vars);
-		mlx_hook(vars.win, 17, 1L<<0, &handle_cross, &vars);
+		mlx_hook(vars.win, 2, 1L << 0, &handle_input, &vars);
+		mlx_hook(vars.win, 17, 1L << 17, &handle_cross, &vars);
 		mlx_loop(vars.mlx);
-		mlx_destroy_image(vars.mlx, img.img);
-		mlx_destroy_display(vars.mlx);
-		free(vars.mlx);
-		free(map.map);
-		free(map.points);
+		ft_final_free(&map, &vars, &vars.img);
 	}
 }

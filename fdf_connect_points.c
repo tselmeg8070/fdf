@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf_connect_points.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tadiyamu <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/27 13:41:08 by tadiyamu          #+#    #+#             */
+/*   Updated: 2023/02/27 13:41:09 by tadiyamu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fdf.h"
 
 int	ft_cal_inc(int point, int dest)
@@ -7,7 +19,7 @@ int	ft_cal_inc(int point, int dest)
 	return (-1);
 }
 
-void ft_connect_high(t_point s, t_point e, t_data *img)
+void	ft_connect_high(t_point s, t_point e, t_data *img)
 {
 	int	d[2];
 	int	delta;
@@ -31,7 +43,7 @@ void ft_connect_high(t_point s, t_point e, t_data *img)
 	ft_mlx_pixel_put(img, s.x, s.y, s.color);
 }
 
-void ft_connect_low(t_point s, t_point e, t_data *img)
+void	ft_connect_low(t_point s, t_point e, t_data *img)
 {
 	int	d[2];
 	int	delta;
@@ -75,9 +87,6 @@ void	ft_connect(t_point *s, t_point *e, t_data *img)
 
 void	ft_connect_points(int r, int c, t_map *map, t_data *img)
 {
-	int	inc_x;
-	int	inc_y;
-
 	if (r + 1 >= map->row || c + 1 >= map->col)
 		return ;
 	if (map->points[r * map->col + c].rend)

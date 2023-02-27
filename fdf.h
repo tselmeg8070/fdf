@@ -55,6 +55,7 @@ typedef struct s_map {
 typedef struct s_vars {
 	void	*mlx;
 	void	*win;
+	t_data	img;
 }	t_vars;
 
 void	ft_split_free(char ***res);
@@ -80,5 +81,11 @@ void	ft_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	ft_calculate_points(t_map *map);
 
 void	ft_connect_points(int r, int c, t_map *map, t_data *img);
+
+int		handle_input(int keysym, t_vars *vars);
+
+int		handle_cross(t_vars *vars);
+
+int		handle_no_event(void);
 
 #endif
