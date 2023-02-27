@@ -46,7 +46,7 @@ $(MINILIBX):
 
 clean:
 	make clean -C libft
-	make clean -C libft
+	make clean -C minilibx-linux
 	rm -f $(OBJS)
 
 fclean: clean
