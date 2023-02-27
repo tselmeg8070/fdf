@@ -28,10 +28,10 @@ FILES = main \
 SRCS = $(addsuffix .c, $(FILES))
 OBJS = $(addsuffix .o, $(FILES))
 
-$(NAME): $(OBJS) $(LIBFT) $(MINILIBX)
-	$(CC) $(FLAGS) $(SRCS) -Lminilibx-linux \
+$(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
+	$(CC) $(FLAGS) -o $(NAME) $(OBJS) -Lminilibx-linux \
 	-lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz \
-	-L./libft -lft  -o $(NAME)
+	-L./libft -lft
 
 all: $(NAME)
 
