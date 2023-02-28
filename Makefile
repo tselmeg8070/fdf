@@ -12,8 +12,8 @@
 
 NAME = fdf
 CC = cc
-LIBFT = libft.a
-MINILIBX = libmlx_Linux.a
+LIBFT = ./libft/libft.a
+MINILIBX = ./minilibx-linux/libmlx_Linux.a
 FLAGS = -Wall -Wextra -Werror
 FILES = main \
 		fdf_prepare_map \
@@ -28,8 +28,8 @@ FILES = main \
 SRCS = $(addsuffix .c, $(FILES))
 OBJS = $(addsuffix .o, $(FILES))
 
-$(NAME): $(LIBFT) $(MINILIBX) $(OBJS)
-	$(CC) $(FLAGS) -o $(NAME) $(OBJS) -Lminilibx-linux \
+$(NAME): $(OBJS) $(LIBFT) $(MINILIBX)
+	$(CC) $(FLAGS) -o $(NAME) $^ -Lminilibx-linux \
 	-lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz \
 	-L./libft -lft
 

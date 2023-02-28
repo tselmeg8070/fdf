@@ -25,16 +25,18 @@ void	ft_calculate_window_size(t_map *map)
 	int	r;
 	int	c;
 
+	map->width = 0;
+	map->height = 0;
 	r = 0;
 	while (r < map->row)
 	{
 		c = 0;
 		while (c < map->col)
 		{
-			if (map->points[map->col * r + c].x > map->max)
-				map->max = map->points[map->col * r + c].x;
-			if (map->points[map->col * r + c].y > map->max)
-				map->max = map->points[map->col * r + c].y;
+			if (map->points[map->col * r + c].x > map->width)
+				map->width = map->points[map->col * r + c].x;
+			if (map->points[map->col * r + c].y > map->height)
+				map->height = map->points[map->col * r + c].y;
 			c++;
 		}
 		r++;
@@ -63,8 +65,8 @@ int	main(int argc, char **argv)
 		ft_calculate_points(&map);
 		ft_calculate_window_size(&map);
 		vars.mlx = mlx_init();
-		vars.win = mlx_new_window(vars.mlx, map.max, map.max, argv[1]);
-		vars.img.img = mlx_new_image(vars.mlx, map.max, map.max);
+		vars.win = mlx_new_window(vars.mlx, map.width, map.height, argv[1]);
+		vars.img.img = mlx_new_image(vars.mlx, map.width, map.height);
 		vars.img.addr = mlx_get_data_addr(vars.img.img,
 				&vars.img.bits_per_pixel,
 				&vars.img.line_length, &vars.img.endian);

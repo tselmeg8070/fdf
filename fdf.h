@@ -48,6 +48,8 @@ typedef struct s_map {
 	int		col;
 	int		min;
 	int		max;
+	int		height;
+	int		width;
 	int		tile_width;
 	int		tile_height;
 }	t_map;
