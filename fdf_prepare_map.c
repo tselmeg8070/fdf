@@ -88,7 +88,7 @@ void	ft_map_from_file(char *file, t_map *map)
 		free(content);
 		ft_error_gen();
 	}
-	ft_map_bottom_up(map);
+	// ft_map_bottom_up(map);
 	if (map->tile_width > 540 / map->col)
 		map->tile_width = 540 / map->col;
 	if (map->tile_width < 4)
