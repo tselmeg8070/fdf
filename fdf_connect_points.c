@@ -87,15 +87,27 @@ void	ft_connect(t_point *s, t_point *e, t_data *img)
 
 void	ft_connect_points(int r, int c, t_map *map, t_data *img)
 {
-	if (r + 1 >= map->row || c + 1 >= map->col)
-		return ;
-	if (map->points[r * map->col + c].rend)
-		return ;
-	map->points[r * map->col + c].rend = 1;
-	ft_connect(&(map->points[r * map->col + c]),
-		&(map->points[(r + 1) * map->col + c]), img);
-	ft_connect(&(map->points[r * map->col + c]),
-		&(map->points[r * map->col + (c + 1)]), img);
-	ft_connect_points(r + 1, c, map, img);
-	ft_connect_points(r, c + 1, map, img);
+	while (r < map->row)
+	{
+		c = 0;
+		while (c < map->col)
+		{
+			if (r - 1 >= 0)
+				ft_connect(&(map->points[r * map->col + c]),
+					&(map->points[(r - 1) * map->col + c]), img);
+			if (c - 1 >= 0)
+				ft_connect(&(map->points[r * map->col + c]),
+					&(map->points[r * map->col + (c - 1)]), img);
+			c++;
+		}
+		r++;
+	}
 }
+
+// if (r + 1 >= map->row || c + 1 >= map->col)
+// 	return ;
+// if (map->points[r * map->col + c].rend)
+// 	return ;
+// map->points[r * map->col + c].rend = 1;
+// ft_connect_points(r + 1, c, map, img);
+// ft_connect_points(r, c + 1, map, img);

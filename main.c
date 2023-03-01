@@ -25,8 +25,8 @@ void	ft_calculate_window_size(t_map *map)
 	int	r;
 	int	c;
 
-	map->width = 0;
-	map->height = 0;
+	map->width = 5;
+	map->height = 5;
 	r = 0;
 	while (r < map->row)
 	{
@@ -34,9 +34,9 @@ void	ft_calculate_window_size(t_map *map)
 		while (c < map->col)
 		{
 			if (map->points[map->col * r + c].x > map->width)
-				map->width = map->points[map->col * r + c].x;
+				map->width = map->points[map->col * r + c].x + 5;
 			if (map->points[map->col * r + c].y > map->height)
-				map->height = map->points[map->col * r + c].y;
+				map->height = map->points[map->col * r + c].y + 5;
 			c++;
 		}
 		r++;
@@ -54,18 +54,27 @@ void	ft_final_free(t_map *map, t_vars *vars, t_data *img)
 	free(map->points);
 }
 
+int	ft_check_ext(char *name)
+{
+	name = ft_strrchr(name, '.');
+	if (ft_strncmp(name, ".fdf\0", 4) == 0)
+		return (1);
+	ft_error_gen();
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_vars	vars;
 	t_map	map;
 
-	if (argc == 2)
+	if (argc == 2 && ft_check_ext(argv[1]))
 	{
 		ft_map_from_file(argv[1], &map);
 		ft_calculate_points(&map);
 		ft_calculate_window_size(&map);
 		vars.mlx = mlx_init();
-		vars.win = mlx_new_window(vars.mlx, map.width, map.height, argv[1]);
+		vars.win = mlx_new_window(vars.mlx, map.width, map.height, "FDF");
 		vars.img.img = mlx_new_image(vars.mlx, map.width, map.height);
 		vars.img.addr = mlx_get_data_addr(vars.img.img,
 				&vars.img.bits_per_pixel,

@@ -33,6 +33,12 @@ int	ft_cnt_split(char *line)
 	return (c);
 }
 
+void	ft_cnt_line_util(char **temp, char **line)
+{
+	free(*temp);
+	free(*line);
+}
+
 int	ft_cnt_line(char *file, t_map *map, char **content)
 {
 	int		fd;
@@ -50,11 +56,11 @@ int	ft_cnt_line(char *file, t_map *map, char **content)
 		line = get_next_line(fd);
 		if (line && ++c)
 		{
-			map->col = ft_cnt_split(line);
+			if (c == 1)
+				map->col = ft_cnt_split(line);
 			temp = *content;
 			*content = ft_strjoin(*content, line);
-			free(temp);
-			free(line);
+			ft_cnt_line_util(&temp, &line);
 		}
 	}
 	close(fd);
@@ -73,7 +79,7 @@ int	ft_assign_split(t_map *map, char *line, int row)
 	split = ft_split(line, ' ');
 	while (split && split[c] && res)
 	{
-		if (c > map->col)
+		if (c >= map->col)
 			res = 0;
 		else
 			ft_split_to_cord(map, row, c, split[c]);
